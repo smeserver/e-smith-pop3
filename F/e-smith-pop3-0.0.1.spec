@@ -12,8 +12,11 @@ Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 BuildRequires: e-smith-devtools >= 1.13.0-04
 BuildArchitectures: noarch
+Requires: e-smith-email
 Requires: runit
+Requires: qmail
 Requires: checkpassword
+Obsoletes: e-smith-ssl-popd
 AutoReqProv: no
 
 %changelog
@@ -31,12 +34,16 @@ Startup scripts for pop3 package.
 perl createlinks
 
 mkdir -p root/service
-ln -s /var/service/pop3 root/service/pop3
-touch root/var/service/pop3/down
-ln -s /var/service/pop3s root/service/pop3s
-touch root/var/service/pop3s/down
-
-mkdir -p root/var/log/popd
+for i in pop3 pop3s
+do
+  mkdir -p root/var/service/$i/peers
+  mkdir -p root/etc/e-smith/templates/var/service/$i/peers
+  mkdir -p root/etc/e-smith/templates/var/service/$i/peers/{0,local}
+  touch root/etc/e-smith/templates/var/service/$i/peers/{0,local}/template-begin
+  touch root/var/service/$i/down
+  ln -s /var/service/$i root/service/$i
+done
+mkdir -p root/var/log/pop3
 mkdir -p root/var/log/pop3s
 
 %install
@@ -51,8 +58,8 @@ rm -f %{name}-%{version}-%{release}-filelist
     --file /var/service/pop3s/run 'attr(0750,root,root)' \
     --file /var/service/pop3s/log/run 'attr(0750,root,root)' \
     --dir '/var/log/pop3s' 'attr(2750,smelog,smelog)' \
-    --file /var/service/popd/run 'attr(0750,root,root)' \
-    --file /var/service/popd/log/run 'attr(0750,root,root)' \
+    --file /var/service/pop3/run 'attr(0750,root,root)' \
+    --file /var/service/pop3/log/run 'attr(0750,root,root)' \
     > %{name}-%{version}-%{release}-filelist
 echo "%doc COPYING" >> %{name}-%{version}-%{release}-filelist
 
