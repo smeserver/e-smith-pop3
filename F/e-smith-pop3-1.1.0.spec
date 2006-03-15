@@ -1,15 +1,13 @@
 Summary: startup scripts for pop3 package
 %define name e-smith-pop3
 Name: %{name}
-%define version 1.1.0
-%define release 04
+%define version 1.2.0
+%define release 01
 Version: %{version}
 Release: %{release}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: e-smith-pop3-1.1.0-02.mitel_patch
-Patch1: e-smith-pop3-1.1.0-RelocatePOPDefaults.patch
 Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 BuildRequires: e-smith-devtools >= 1.13.0-04
@@ -22,6 +20,9 @@ Obsoletes: e-smith-ssl-popd
 AutoReqProv: no
 
 %changelog
+* Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.0-01
+- Roll stable stream version. [SME: 1016]
+
 * Mon Mar 13 2006 Gordon Rowell <gordonr@gormand.com.au> 1.1.0-04
 - Move pop3[s] defaults from e-smith-email [SME: 561]
 
@@ -42,8 +43,6 @@ Startup scripts for pop3 package.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 perl createlinks
