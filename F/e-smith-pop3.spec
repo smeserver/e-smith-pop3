@@ -2,14 +2,14 @@ Summary: startup scripts for pop3 package
 %define name e-smith-pop3
 Name: %{name}
 %define version 1.2.0
-%define release 02
+%define release 3
 Version: %{version}
-Release: %{release}
+Release: %smerelease %{release}
+Packager: %{_packager}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: e-smith-pop3-1.2.0-startstop.patch
-Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 BuildRequires: e-smith-devtools >= 1.13.0-04
 BuildArchitectures: noarch
@@ -21,6 +21,10 @@ Obsoletes: e-smith-ssl-popd
 AutoReqProv: no
 
 %changelog
+* Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
+- Update to new release naming.  No functional changes.
+- Make Packager generic
+
 * Fri Mar 24 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.0-02
 - Ensure that pop3 and pop3s are started or stopped if required,
   during email-update event. [SME: 1125]
