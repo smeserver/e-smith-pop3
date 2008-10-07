@@ -1,14 +1,15 @@
+# $Id: e-smith-pop3.spec,v 1.2 2008/10/07 18:52:05 slords Exp $
+
 Summary: startup scripts for pop3 package
 %define name e-smith-pop3
 Name: %{name}
-%define version 1.2.0
-%define release 3
+%define version 2.2.0
+%define release 1
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: e-smith-pop3-1.2.0-startstop.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 BuildRequires: e-smith-devtools >= 1.13.0-04
 BuildArchitectures: noarch
@@ -20,6 +21,9 @@ Obsoletes: e-smith-ssl-popd
 AutoReqProv: no
 
 %changelog
+* Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
+- Roll new stream to separate sme7/sme8 trees [SME: 4633]
+
 * Sun Apr 29 2007 Shad L. Lords <slords@mail.com>
 - Clean up spec so package can be built by koji/plague
 
@@ -54,7 +58,6 @@ Startup scripts for pop3 package.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 perl createlinks
