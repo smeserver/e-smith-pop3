@@ -1,26 +1,31 @@
-# $Id: e-smith-pop3.spec,v 1.2 2008/10/07 18:52:05 slords Exp $
+# $Id: e-smith-pop3.spec,v 1.3 2010/09/22 17:57:00 vip-ire Exp $
 
 Summary: startup scripts for pop3 package
 %define name e-smith-pop3
 Name: %{name}
 %define version 2.2.0
-%define release 1
+%define release 2
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch1: e-smith-pop3-2.2.0-checkpassword_pam.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 BuildRequires: e-smith-devtools >= 1.13.0-04
 BuildArchitectures: noarch
 Requires: e-smith-email
 Requires: runit
 Requires: qmail
-Requires: checkpassword
+Requires: checkpassword-pam
 Obsoletes: e-smith-ssl-popd
+Obsoletes: checkpassword
 AutoReqProv: no
 
 %changelog
+* Wed Sep 22 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-2.sme
+- Shift auth from passwd/shadow files to the pam database [SME: 6218]
+
 * Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
 - Roll new stream to separate sme7/sme8 trees [SME: 4633]
 
@@ -58,6 +63,7 @@ Startup scripts for pop3 package.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 perl createlinks
