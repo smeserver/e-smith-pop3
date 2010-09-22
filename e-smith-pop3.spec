@@ -1,10 +1,10 @@
-# $Id: e-smith-pop3.spec,v 1.3 2010/09/22 17:57:00 vip-ire Exp $
+# $Id: e-smith-pop3.spec,v 1.4 2010/09/22 18:16:25 vip-ire Exp $
 
 Summary: startup scripts for pop3 package
 %define name e-smith-pop3
 Name: %{name}
 %define version 2.2.0
-%define release 2
+%define release 3
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -23,6 +23,9 @@ Obsoletes: checkpassword
 AutoReqProv: no
 
 %changelog
+* Wed Sep 22 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-3.sme
+- Add symlink for template-begin of pop3 pam config [SME: 6218]
+
 * Wed Sep 22 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-2.sme
 - Shift auth from passwd/shadow files to the pam database [SME: 6218]
 
@@ -80,6 +83,11 @@ do
 done
 mkdir -p root/var/log/pop3
 mkdir -p root/var/log/pop3s
+
+mkdir -p root/etc/e-smith/templates/etc/pam.d/pop3
+ln -s /etc/e-smith/templates-default/template-begin-pam \
+     root/etc/e-smith/templates/etc/pam.d/pop3/template-begin
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
